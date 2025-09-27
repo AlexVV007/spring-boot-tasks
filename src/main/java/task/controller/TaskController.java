@@ -17,7 +17,6 @@ public class TaskController {
 
 	@GetMapping
 	public ResponseEntity<List<Task>> getAllTasks() {
-
 		return ResponseEntity.ok(taskService.getAllTasks());
 	}
 
@@ -26,15 +25,14 @@ public class TaskController {
 		return ResponseEntity.ok(taskService.getUserTasks(userId));
 	}
 
-
 	@PostMapping("/insert")
 	public ResponseEntity<Task> createTask(@RequestBody Task task) {
 		return new ResponseEntity<>(taskService.createTask(task), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/{taskId}")
-	public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
-		taskService.deleteTask(taskId);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+		taskService.deleteTask(id);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -1,46 +1,52 @@
 package task.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tasks")
 public class Task {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private Long taskId;
 
-	@NonNull
+	@Column(nullable = false)
 	@Builder.Default
 	private String taskText = "New task";
 
-	private LocalDateTime actionDate;
+	@Column(nullable = false)
+	private Long userId;
 
-	@NonNull
+	@Column(nullable = false)
 	@Builder.Default
 	private LocalDateTime createDate = LocalDateTime.now();
 
-	@NonNull
-	@Builder.Default
-	private Boolean isComplete = false;
+	private LocalDate actionDate;
 
-	@NonNull
-	private Long userId;
-
-	@NonNull
+	@Column(nullable = false)
 	@Builder.Default
-	private Boolean isDelete = false;
+	private boolean isComplete = false;
+
+	@Column(nullable = false)
+	@Builder.Default
+	private boolean isDelete = false;
 
 
 	@Override
 	public String toString() {
-		String s = "Task{" +
+		return "Task{" +
 				"id=" + taskId +
-				", title='" + taskText;
-		return s ;
+				", title='" + taskText + '\'' +
+				", completed=" + isComplete +
+				'}';
 	}
 }
