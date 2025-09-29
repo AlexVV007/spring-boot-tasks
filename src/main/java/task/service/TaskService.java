@@ -7,7 +7,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import task.model.Task;
 import task.repository.TaskRepository;
 
@@ -51,6 +52,18 @@ public class TaskService {
         taskRepository.markAsDeleted(id);
     }
 
+    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.SECONDS)
+    public void checkForOverdueTasks() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Task> activeTask = taskRepository.findByIsDeleteFalse();
+        System.out.printf("Total active task: %d\n",activeTask.size());
+    }
+
+
+    @Async
+    public CompletableFuture<List<Task>> getCompletedUserTasks(Long userId) {
+        List<Task> retrieval = taskRepository.findByUserIdAndIsCompleteFalseAndIsDeleteFalse(userId);
+        return CompletableFuture.completedFuture(retrieval);
     }
 
 }
