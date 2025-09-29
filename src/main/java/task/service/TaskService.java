@@ -1,7 +1,5 @@
 package task.service;
 
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,6 +7,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import task.model.Task;
 import task.repository.TaskRepository;
 
@@ -65,5 +65,7 @@ public class TaskService {
         List<Task> retrieval = taskRepository.findByUserIdAndIsCompleteFalseAndIsDeleteFalse(userId);
         return CompletableFuture.completedFuture(retrieval);
     }
+
+}
 
 }
