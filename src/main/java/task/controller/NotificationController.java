@@ -14,10 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class NotificationController {
     private final NotificationService notificationService;
-    @GetMapping
-    public ResponseEntity<List<Notification>> getAllNotifications() {
-        return ResponseEntity.ok(notificationService.getAllNotifications());
-    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable Long userId) {
         return ResponseEntity.ok(notificationService.getUserNotifications(userId));

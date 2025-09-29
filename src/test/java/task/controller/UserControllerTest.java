@@ -42,15 +42,11 @@ class UserControllerTest {
 
         user1 = User.builder()
                 .userId(user1ID)
-                .login("user1Login")
-                .email("user1@gmail.com")
                 .userName("user1Name")
                 .build();
 
         user2 = User.builder()
                 .userId(user2ID)
-                .login("user2Login")
-                .email("user2@gmail.com")
                 .userName("user2Name")
                 .build();
     }
@@ -60,8 +56,6 @@ class UserControllerTest {
 
         User savedUser = User.builder()
                 .userId(user1ID)
-                .login("user1Login")
-                .email("user1@gmail.com")
                 .userName("user1Name")
                 .build();
 
@@ -97,19 +91,6 @@ class UserControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(userService).getUserById(userId);
     }
-
-    @Test
-    void getAllUsers_ReturnAllUsers() {
-        // Arrange
-        List<User> usersExist = Arrays.asList(user1, user2);
-
-        when(userService.getAllUsers()).thenReturn(usersExist);
-
-        ResponseEntity<List<User>> response = userController.getAllUsers();
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(usersExist, response.getBody());
-        verify(userService).getAllUsers();
 
     }
 
