@@ -52,18 +52,5 @@ public class TaskService {
         taskRepository.markAsDeleted(id);
     }
 
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.SECONDS)
-    public void checkForOverdueTasks() {
-        LocalDateTime now = LocalDateTime.now();
-        List<Task> activeTask = taskRepository.findByIsDeleteFalse();
-        System.out.printf("Total active task: %d\n",activeTask.size());
-    }
-
-
-    @Async
-    public CompletableFuture<List<Task>> getCompletedUserTasks(Long userId) {
-        List<Task> retrieval = taskRepository.findByUserIdAndIsCompleteFalseAndIsDeleteFalse(userId);
-        return CompletableFuture.completedFuture(retrieval);
-    }
 
 }
