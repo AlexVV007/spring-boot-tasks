@@ -16,17 +16,17 @@ public class TaskService {
     private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
+
         this.taskRepository = taskRepository;
     }
 
     public List<Task> getAllTasks() {
+
         return taskRepository.findByIsDeleteFalse();
     }
 
-    @Cacheable(cacheNames = "user_task", key = "#userId")
-    public List<Task> getUserTasks(Long userId) {
-        System.out.printf("Cache missed: %s\n", userId);
-        return taskRepository.findByUserIdAndIsDeleteFalse(userId);
+     public List<Task> getUserTasks(Long userId) {
+         return taskRepository.findByUserIdAndIsDeleteFalse(userId);
     }
 
 
