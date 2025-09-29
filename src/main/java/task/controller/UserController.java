@@ -15,10 +15,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
 
     @PostMapping("/insert")
     public ResponseEntity<User> register(@RequestBody User user) {
@@ -26,7 +22,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
