@@ -5,19 +5,27 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import task.model.Task;
 import task.repository.TaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final KafkaTemplate<String, Task> kafkaTemplate;
 
-    public TaskService(TaskRepository taskRepository) {
+
+    public TaskService(TaskRepository taskRepository, KafkaTemplate<String, Task> kafkaTemplate) {
         this.taskRepository = taskRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
+
 
     public List<Task> getAllTasks() {
         return taskRepository.findByIsDeleteFalse();
@@ -41,4 +49,6 @@ public class TaskService {
     public void deleteTask(Long id) {
         taskRepository.markAsDeleted(id);
     }
+
+
 }
